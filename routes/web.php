@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Livewire\ChatComponent;
+use App\Http\Livewire\Admin\UserManagement;
+use App\Http\Livewire\Admin\Settings;
 use App\Models\Chat;
 use App\Models\User;
 
@@ -29,6 +31,11 @@ Route::middleware('auth')->resource('contacts', ContactController::class)->excep
 Route::get('/chat', ChatComponent::class)
     ->middleware('auth')
     ->name('chat.index');
+
+Route::middleware(['auth', 'can:admin'])->group(function () {
+    Route::get('/admin/users', UserManagement::class)->name('admin.users');
+    Route::get('/admin/settings', Settings::class)->name('admin.settings');
+});
 
 Route::get('prueba', function(){
 

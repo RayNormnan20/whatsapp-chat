@@ -24,17 +24,18 @@
 
         <script>
             window.PUSHER_APP_KEY = '{{ config('broadcasting.connections.pusher.key') }}';
-            window.APP_ENV = {{ config('app.env') == 'production' ? true : false }};
+            window.APP_ENV = {{ (config('app.env') == 'production') ? 'true' : 'false' }};
         </script>
 
     </head>
     <body class="font-sans antialiased">
         
+        @livewire('navigation-menu')
         
         <div class="h-32 bg-teal-600">
         </div>
 
-        <div class="absolute left-0 top-6 w-screen">
+        <div class="absolute left-0 top-20 w-screen">
             <div class="container mx-auto">
 
                 {{ $slot }}

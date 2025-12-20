@@ -119,6 +119,51 @@ class ChatComponent extends Component
     }
 
     public function sendMessage(){
+        $settings = \App\Models\Setting::instance();
+        $user = auth()->user();
+
+        // Validate User Status
+        if (!$user->is_active) {
+            auth()->guard('web')->logout();
+            return redirect()->route('login');
+        }
+
+        // Validate Messages
+        if ($this->bodyMessage) {
+            if (!$user->allow_send_messages) {
+                $this->addError('bodyMessage', 'No tiene permiso para enviar mensajes.');
+                return;
+            }
+            if ($user->role !== 'admin' && !$settings->allow_send_messages) {
+                $this->addError('bodyMessage', 'El envío de mensajes está deshabilitado temporalmente.');
+                return;
+            }
+        }
+
+        // Validate Images
+        if (is_array($this->images) && count($this->images) > 0) {
+            if (!$user->allow_send_images) {
+                $this->addError('images', 'No tiene permiso para enviar imágenes.');
+                return;
+            }
+            if ($user->role !== 'admin' && !$settings->allow_send_images) {
+                $this->addError('images', 'El envío de imágenes está deshabilitado temporalmente.');
+                return;
+            }
+        }
+
+        // Validate Audio
+        if ($this->audio) {
+            if (!$user->allow_send_audio) {
+                $this->addError('audio', 'No tiene permiso para enviar audios.');
+                return;
+            }
+            if ($user->role !== 'admin' && !$settings->allow_send_audio) {
+                $this->addError('audio', 'El envío de audios está deshabilitado temporalmente.');
+                return;
+            }
+        }
+
         $this->validate([
             'bodyMessage' => 'required_without_all:images,audio|nullable',
             'images' => 'required_without_all:bodyMessage,audio|nullable|array|max:10',

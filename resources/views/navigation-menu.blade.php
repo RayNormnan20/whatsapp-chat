@@ -19,6 +19,15 @@
                     <x-jet-nav-link href="{{ route('chat.index') }}" :active="request()->routeIs('chat.index')">
                         Chat
                     </x-jet-nav-link>
+
+                    @if (Auth::user()->role === 'admin')
+                        <x-jet-nav-link href="{{ route('admin.users') }}" :active="request()->routeIs('admin.users')">
+                            Usuarios
+                        </x-jet-nav-link>
+                        <x-jet-nav-link href="{{ route('admin.settings') }}" :active="request()->routeIs('admin.settings')">
+                            Ajustes
+                        </x-jet-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -148,6 +157,15 @@
             <x-jet-responsive-nav-link href="{{ route('chat.index') }}" :active="request()->routeIs('chat.index')">
                 Chat
             </x-jet-responsive-nav-link>
+
+            @if (Auth::user()->role === 'admin')
+                <x-jet-responsive-nav-link href="{{ route('admin.users') }}" :active="request()->routeIs('admin.users')">
+                    Usuarios
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('admin.settings') }}" :active="request()->routeIs('admin.settings')">
+                    Ajustes
+                </x-jet-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

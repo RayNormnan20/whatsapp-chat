@@ -20,7 +20,7 @@
 
             </div>
 
-            <div class="h-[calc(100vh-10.5rem)] overflow-auto border-t border-gray-200">
+            <div class="h-[calc(100vh-14rem)] overflow-auto border-t border-gray-200">
                 @if ($this->chats->count() == 0 || $search)
                 
                     <div class="px-4 py-3">
@@ -162,7 +162,7 @@
 
                 </div>
 
-                <div class="h-[calc(100vh-11rem)] px-3 py-2 overflow-auto">
+                <div class="h-[calc(100vh-14.5rem)] px-3 py-2 overflow-auto">
                     {{-- El contenido de nuestro chat --}}
                     @foreach ($this->messages as $message)
                         

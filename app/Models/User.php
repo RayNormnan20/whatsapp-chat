@@ -27,6 +27,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'allow_send_messages',
+        'allow_send_images',
+        'allow_send_audio',
+        'is_active',
     ];
 
     /**
@@ -48,6 +52,10 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'allow_send_messages' => 'boolean',
+        'allow_send_images' => 'boolean',
+        'allow_send_audio' => 'boolean',
+        'is_active' => 'boolean',
     ];
 
     /**
