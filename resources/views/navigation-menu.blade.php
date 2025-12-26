@@ -136,7 +136,7 @@
             </div>
 
             <!-- Hamburger -->
-            <div class="-mr-2 flex items-center sm:hidden">
+            <div class="-mr-2 flex items-center sm:hidden hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -238,4 +238,40 @@
             </div>
         </div>
     </div>
+    <!-- Bottom Navigation Menu -->
+    <div x-data="{ show: true }" 
+         @hide-bottom-nav.window="show = false" 
+         @show-bottom-nav.window="show = true"
+         x-show="show"
+         class="fixed bottom-0 w-full bg-white border-t border-gray-200 sm:hidden flex justify-around items-center h-16 z-50 transition-transform duration-300">
+        
+        <a href="{{ route('contacts.index') }}" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-teal-600 {{ request()->routeIs('contacts.*') ? 'text-teal-600' : '' }}">
+            <i class="fas fa-users text-xl mb-1"></i>
+            <span class="text-xs">Contactos</span>
+        </a>
+
+        <a href="{{ route('chat.index') }}" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-teal-600 {{ request()->routeIs('chat.index') ? 'text-teal-600' : '' }}">
+            <i class="fas fa-comment-dots text-xl mb-1"></i>
+            <span class="text-xs">Chat</span>
+        </a>
+
+        @if (Auth::user()->role === 'admin')
+            <a href="{{ route('admin.users') }}" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-teal-600 {{ request()->routeIs('admin.users') ? 'text-teal-600' : '' }}">
+                <i class="fas fa-user-shield text-xl mb-1"></i>
+                <span class="text-xs">Usuarios</span>
+            </a>
+
+            <a href="{{ route('admin.settings') }}" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-teal-600 {{ request()->routeIs('admin.settings') ? 'text-teal-600' : '' }}">
+                <i class="fas fa-cog text-xl mb-1"></i>
+                <span class="text-xs">Ajustes</span>
+            </a>
+        @endif
+
+        <a href="{{ route('profile.show') }}" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-teal-600 {{ request()->routeIs('profile.show') ? 'text-teal-600' : '' }}">
+            <i class="fas fa-user text-xl mb-1"></i>
+            <span class="text-xs">Perfil</span>
+        </a>
+
+    </div>
+
 </nav>

@@ -109,13 +109,14 @@ class ChatComponent extends Component
             $this->reset('chat', 'bodyMessage', 'search');
         }
 
-
+        $this->dispatchBrowserEvent('hide-bottom-nav');
     }
 
     public function open_chat(Chat $chat){
         $this->chat = $chat;
         $this->chat_id = $chat->id;
         $this->reset('contactChat', 'bodyMessage');
+        $this->dispatchBrowserEvent('hide-bottom-nav');
     }
 
     public function close_chat(){
@@ -123,6 +124,7 @@ class ChatComponent extends Component
         $this->contactChat = null;
         $this->chat_id = null;
         $this->reset('bodyMessage', 'search');
+        $this->dispatchBrowserEvent('show-bottom-nav');
     }
 
     public function sendMessage(){
