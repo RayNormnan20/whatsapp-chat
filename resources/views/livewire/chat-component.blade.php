@@ -1,9 +1,9 @@
 <div x-data="data()" class="bg-gray-50 rounded-lg shadow border border-gray-200 overflow-hidden">
     
 
-    <div class="grid grid-cols-3 divide-x divide-gray-200">
+    <div class="grid grid-cols-1 lg:grid-cols-3 lg:divide-x divide-gray-200">
 
-        <div class="col-span-1">
+        <div class="col-span-1 {{ $chat || $contactChat ? 'hidden lg:block' : '' }}">
 
             <div class="bg-gray-100 h-16 flex items-center px-4">
 
@@ -114,11 +114,15 @@
 
 
 
-        <div class="col-span-2">
+        <div class="col-span-2 {{ !$chat && !$contactChat ? 'hidden lg:block' : '' }}">
 
             @if ($contactChat || $chat)
 
                 <div class="bg-gray-100 h-16 flex items-center px-3">
+
+                    <button wire:click="close_chat" class="mr-4 lg:hidden">
+                        <i class="fas fa-arrow-left text-gray-600"></i>
+                    </button>
 
                     <figure>
 
@@ -203,37 +207,33 @@
 
                 </div>
 
-                <form class="bg-gray-100 h-16 flex items-center px-4 space-x-4 relative" wire:submit.prevent="sendMessage()">
+                <form class="bg-gray-100 h-16 flex items-center px-2 lg:px-4 space-x-2 lg:space-x-4 relative" wire:submit.prevent="sendMessage()">
                     
-                    <button type="button" class="text-2xl text-gray-700" @click="showActionMenu = !showActionMenu">
+                    <button type="button" class="text-2xl text-gray-700 flex-shrink-0" @click="showActionMenu = !showActionMenu">
                         <i class="fas fa-plus-circle"></i>
                     </button>
 
-                    <button type="button" class="text-2xl text-gray-700">
-                        <i class="far fa-smile"></i>
-                    </button>
-
-                    <x-jet-input wire:model="bodyMessage" type="text" class="flex-1" placeholder="Escriba un mensaje aquí" />
+                    <x-jet-input wire:model="bodyMessage" type="text" class="flex-1 min-w-0" placeholder="Escriba un mensaje aquí" />
 
                     <input type="file" wire:model="images" accept="image/*" capture="environment" multiple class="hidden" x-ref="imageInput">
                     <input type="file" wire:model="audio" accept="audio/*" class="hidden" x-ref="audioInput">
 
-                    <button type="button" class="text-2xl text-gray-700" @click="$refs.imageInput.click()">
+                    <button type="button" class="text-2xl text-gray-700 flex-shrink-0" @click="$refs.imageInput.click()">
                         <i class="far fa-image"></i>
                     </button>
 
                     <template x-if="!recording">
-                        <button type="button" class="text-2xl text-gray-700" @click="startRecording">
+                        <button type="button" class="text-2xl text-gray-700 flex-shrink-0" @click="startRecording">
                             <i class="fas fa-microphone"></i>
                         </button>
                     </template>
                     <template x-if="recording">
-                        <button type="button" class="text-2xl text-red-600" @click="stopRecording">
+                        <button type="button" class="text-2xl text-red-600 flex-shrink-0" @click="stopRecording">
                             <i class="fas fa-stop-circle"></i>
                         </button>
                     </template>
 
-                    <button class="text-2xl text-gray-700">
+                    <button class="text-2xl text-gray-700 flex-shrink-0">
                         <i class="fas fa-paper-plane"></i>
                     </button>
 

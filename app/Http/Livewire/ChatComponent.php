@@ -118,6 +118,13 @@ class ChatComponent extends Component
         $this->reset('contactChat', 'bodyMessage');
     }
 
+    public function close_chat(){
+        $this->chat = null;
+        $this->contactChat = null;
+        $this->chat_id = null;
+        $this->reset('bodyMessage', 'search');
+    }
+
     public function sendMessage(){
         $settings = \App\Models\Setting::instance();
         $user = auth()->user();
